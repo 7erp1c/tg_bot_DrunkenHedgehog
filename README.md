@@ -101,3 +101,8 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 =======
 # tg_bot_DrunkenHedgehog
 >>>>>>> 5fdef3ccef28cda8a9faeb24b57537fb2e741e21
+
+## Проверка бота
+```
+- https://api.telegram.org/bot<token>/getUpdates
+```

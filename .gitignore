@@ -3,6 +3,7 @@
 /node_modules
 /build
 .env
+config.yaml
 # Logs
 logs
 *.log
