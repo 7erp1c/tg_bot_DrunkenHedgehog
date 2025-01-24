@@ -21,6 +21,7 @@ const telegrafFactory = {
 @Module({
   imports: [
     ConfigModule.forRoot({
+      isGlobal: true,
       load: [configuration],
     }),
     ConfigurationModule,

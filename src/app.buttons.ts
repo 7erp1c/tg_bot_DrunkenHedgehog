@@ -1,23 +1,30 @@
 import { Markup } from 'telegraf';
-import { ReplyKeyboardMarkup } from '@telegraf/types';
+import { BotActions } from './user/dto/enum';
 
-// @ts-ignore
-export const actionButtons: Markup<ReplyKeyboardMarkup> = Markup.keyboard(
+const bottonRegisteration = Markup.button.callback('Регистрация', BotActions.REGISTER);
+
+const battonAllUsers = Markup.button.callback(BotActions.ALL_USERS, BotActions.ALL_USERS);
+
+  export const actionButtonsAllUsers:any = Markup.inlineKeyboard(
   [
-    Markup.button.callback('Регистрация', 'register'),
-    Markup.button.callback('Инфа о пользователях', 'users'),
+    bottonRegisteration
   ],
   {
     columns: 2,
   },
 );
-// // @ts-ignore
-// export const actionButtonsAdmin: Markup<ReplyKeyboardMarkup> = Markup.keyboard(
-//   [
-//     Markup!.button.callback('Регистрация😨', 'register'),
-//     Markup!.button.callback('Инфа о пользователях', 'users'),
-//   ],
-//   {
-//     columns: 1,
-//   },
-// );
+
+export const actionButtonsAdmin:any  = Markup.inlineKeyboard(
+  [
+    bottonRegisteration
+  ],
+  {
+    columns: 1,
+  },
+);
+
+export const actionButtonsAdminAllUsers:any = Markup.keyboard([
+  battonAllUsers
+],{
+  columns: 1,
+})

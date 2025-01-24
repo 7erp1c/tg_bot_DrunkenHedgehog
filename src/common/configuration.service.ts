@@ -5,6 +5,10 @@ import * as yaml from 'js-yaml';
 import { join } from 'path';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { TConfiguration } from './types/configruation';
+import * as dotenv from 'dotenv';
+
+// Загружаем переменные окружения из .env файла
+dotenv.config()
 
 const configPath = join(__dirname, '../../config.yaml');
 // const configPath = process.env.CONFIG_FILE_PATH;
