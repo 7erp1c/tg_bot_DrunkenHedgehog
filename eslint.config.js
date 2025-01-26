@@ -28,6 +28,7 @@ module.exports = {
       'error',
       {
         'endOfLine': 'auto',
+        'tabWidth': 4
       }
     ]
   },

@@ -12,9 +12,11 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-  ) {}
+  ) {
+  }
 
   private _genUser(user: Partial<UserEntity>) {
+    console.log('Generated user object:', user);
     return plainToInstance(UserEntity, user);
   }
 
@@ -23,10 +25,12 @@ export class UserService {
   }
 
   create(createUserDto: CreateUserDto): Promise<UserEntity> {
+    console.log('create', createUserDto);
     return this.saveUser(createUserDto);
   }
 
   saveUser(user: Partial<UserEntity>) {
+    console.log('Save user:', user);
     return this.userRepository.save(this._genUser(user));
   }
 
