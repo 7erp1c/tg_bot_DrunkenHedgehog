@@ -1,4 +1,4 @@
-import { Action, Ctx, InjectBot, On, Update } from 'nestjs-telegraf';
+import { Action, Ctx, InjectBot, Update } from 'nestjs-telegraf';
 import { Telegraf } from 'telegraf';
 import { Context } from '../../user/user.controller';
 import { DataBatton, NameBatton } from '../common/enum/bot_actions.enum';
@@ -6,7 +6,7 @@ import { BotScene } from '../common/enum/bot_scene.enum';
 import { EnField } from '../common/enum/bot_db_field.enum';
 
 @Update()
-export class BotProfile {
+export class BotUpdateProfile {
     constructor(@InjectBot() private readonly bot: Telegraf<Context>) {}
 
     @Action(DataBatton.AboutMe)

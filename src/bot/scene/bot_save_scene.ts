@@ -1,22 +1,32 @@
 import { Ctx, On, Scene } from 'nestjs-telegraf';
 import { BotScene } from '../common/enum/bot_scene.enum';
 import { actionButtonsAdminTwo } from '../../app.buttons';
+import { HttpException, HttpStatus } from '@nestjs/common';
+import { ResumeService } from '../../resume/service/resume.service';
 
 @Scene(BotScene.SaveTextScene)
 export class UpdateScene {
+    constructor(private readonly resumeService: ResumeService) {}
     @On('text')
     async handleText(@Ctx() ctx: any) {
         if ('text' in ctx.message) {
             const textInput = ctx.message.text;
-
-            console.log('textInput', textInput); // Текст, который ввел пользователь
-
             // Проверяем, находится ли пользователь на этапе подтверждения
             if (ctx.session.awaitingConfirmation) {
                 // Обрабатываем ответ пользователя
                 if (textInput.toLowerCase() === 'yes') {
-                    // Если пользователь подтвердил (Yes)
-                    //await this.saveDataToDatabase(ctx.session.editingField, ctx.session.tempInput); // Сохранение в базу
+                    //Если пользователь подтвердил (Yes)
+                    const save = await this.resumeService.saveDataToDatabase(
+                        ctx.session.editingField,
+                        ctx.session.tempInput,
+                    ); // Сохранение в базу
+                    if (!save) {
+                        throw new HttpException(
+                            'An error occurred while saving data',
+                            HttpStatus.INTERNAL_SERVER_ERROR,
+                        );
+                    }
+
                     await ctx.reply('Данные успешно сохранены!');
                     await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminTwo);
                 } else if (textInput.toLowerCase() === 'no') {

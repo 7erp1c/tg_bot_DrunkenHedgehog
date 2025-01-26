@@ -5,12 +5,13 @@ import { ConfigurationModule } from '../common/configuration.module';
 import { UserModule } from '../user/user.module';
 import { BotUsers } from './bot_users';
 import { ResumeActions } from './action/bot_update-menu.resume';
-import { BotProfile } from './action/bot_update-profile.resume';
+import { BotUpdateProfile } from './action/bot_update-profile.resume';
 import { UpdateScene } from './scene/bot_save_scene';
+import { ResumeModule } from '../resume/resume.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserEntity]), ConfigurationModule, UserModule],
-    providers: [BotUsers, ResumeActions, BotProfile, UpdateScene],
-    exports: [BotUsers, ResumeActions, BotProfile, UpdateScene],
+    imports: [TypeOrmModule.forFeature([UserEntity]), ConfigurationModule, UserModule, ResumeModule],
+    providers: [BotUsers, ResumeActions, BotUpdateProfile, UpdateScene],
+    exports: [BotUsers, ResumeActions, BotUpdateProfile, UpdateScene],
 })
-export class Bot_module {}
+export class BotModule {}
