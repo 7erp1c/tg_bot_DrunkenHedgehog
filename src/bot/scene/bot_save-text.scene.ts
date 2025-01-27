@@ -1,6 +1,6 @@
 import { Ctx, On, Scene } from 'nestjs-telegraf';
 import { BotScene } from '../common/enum/bot_scene.enum';
-import { actionButtonsAdminTwo } from '../../app.buttons';
+import { actionButtonsAdminTwo } from '../button/bot_admin-markup.buttons';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { ResumeService } from '../../resume/service/resume.service';
 

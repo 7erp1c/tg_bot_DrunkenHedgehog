@@ -15,6 +15,15 @@ export enum NameBatton {
     Experience = 'Опыт',
     Education = 'Образование',
     Photo = 'Мои фото',
+    //get
+    GetResumeInfo = 'Резюме😎',
+    GetAboutMe = 'Обо мне',
+    GetContacts = 'Контакты',
+    GetLines = 'Cсылки',
+    GetTechnologies = 'Технологии',
+    GetExperience = 'Опыт',
+    GetEducation = 'Образование',
+    GetPhoto = 'Мои фото',
 }
 
 export enum DataBatton {
@@ -25,8 +34,17 @@ export enum DataBatton {
     AboutMe = 'update_about_me',
     Contacts = 'update_contact_info',
     Lines = 'update_lines',
-    Technologies = 'Technologies',
+    Technologies = 'technologies',
     Experience = 'update_experience',
     Education = 'update_education',
     Photo = 'update_photo',
+    //get
+    GetResumeInfo = 'get_resume_info',
+    GetAboutMe = 'get_update_about_me',
+    GetContacts = 'get_update_contact_info',
+    GetLines = 'get_update_lines',
+    GetTechnologies = 'get_technologies',
+    GetExperience = 'get_update_experience',
+    GetEducation = 'get_update_education',
+    GetPhoto = 'get_update_photo',
 }

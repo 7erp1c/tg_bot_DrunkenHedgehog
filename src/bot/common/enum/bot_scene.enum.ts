@@ -1,4 +1,5 @@
 export enum BotScene {
-    SaveTextScene = 'SaveTextScene',
-    SavePhotoScene = 'SavePhotoScene',
+    SaveTextScene = 'save_text_scene',
+    SavePhotoScene = 'save_photo_scene',
+    GetResumeScene = 'get_resume_scene',
 }

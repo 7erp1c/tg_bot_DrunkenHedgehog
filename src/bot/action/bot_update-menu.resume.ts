@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Action, Ctx, Update } from 'nestjs-telegraf';
 import { Context, Markup } from 'telegraf';
-import { actionButtonsAdminOne, actionButtonsAdminTwo } from '../../app.buttons';
+import { actionButtonsAdminOne, actionButtonsAdminTwo } from '../button/bot_admin-markup.buttons';
 import { DataBatton } from '../common/enum/bot_actions.enum';
 
 @Update()
 export class ResumeActions {
-    constructor(/*private readonly resumeService: ResumeService*/) {}
-
     @Action(DataBatton.UpdateResume)
     async updateResume(@Ctx() ctx: Context): Promise<void> {
         try {
