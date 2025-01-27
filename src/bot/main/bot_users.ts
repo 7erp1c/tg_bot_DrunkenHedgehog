@@ -2,10 +2,10 @@ import { Action, Ctx, InjectBot, On, Start, Update } from 'nestjs-telegraf';
 import { Telegraf } from 'telegraf';
 import { Context } from 'src/user/user.controller';
 import { actionButtonsAdminOne, actionButtonsResume } from 'src/app.buttons';
-import { ADMIN_USER_ID, CODE_USER_LOGIN } from '../user/dto/variables';
-import { BotActions } from './common/enum/bot_actions.enum';
-import { messages } from '../constants/messages';
-import { RegistrationHandler } from './handlers/registration_handlers';
+import { ADMIN_USER_ID, CODE_USER_LOGIN } from '../../user/dto/variables';
+import { BotActions } from '../common/enum/bot_actions.enum';
+import { messages } from '../../constants/messages';
+import { RegistrationHandler } from '../handlers/registration_handlers';
 import { login } from 'telegraf/typings/button';
 
 @Update()

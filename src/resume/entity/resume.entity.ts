@@ -1,12 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'resume' })
 export class ResumeEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     id: number;
 
-    @Column()
-    photo: string;
+    @Column('jsonb', { nullable: true, default: [] })
+    photos: { key: string; data: string }[];
 
     @Column()
     contactInfo: string;

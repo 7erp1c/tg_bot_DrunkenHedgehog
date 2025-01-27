@@ -5,17 +5,17 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { ResumeService } from '../../resume/service/resume.service';
 
 @Scene(BotScene.SaveTextScene)
-export class UpdateScene {
+export class UpdateTextScene {
     constructor(private readonly resumeService: ResumeService) {}
     @On('text')
-    async handleText(@Ctx() ctx: any) {
+    async saveText(@Ctx() ctx: any) {
         if ('text' in ctx.message) {
             const textInput = ctx.message.text;
             // Проверяем, находится ли пользователь на этапе подтверждения
             if (ctx.session.awaitingConfirmation) {
                 // Обрабатываем ответ пользователя
-                if (textInput.toLowerCase() === 'yes') {
-                    //Если пользователь подтвердил (Yes)
+                if (textInput.toLowerCase() === 'y') {
+                    //Если пользователь подтвердил (y)
                     const save = await this.resumeService.saveDataToDatabase(
                         ctx.session.editingField,
                         ctx.session.tempInput,
@@ -26,22 +26,25 @@ export class UpdateScene {
                             HttpStatus.INTERNAL_SERVER_ERROR,
                         );
                     }
-
                     await ctx.reply('Данные успешно сохранены!');
                     await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminTwo);
-                } else if (textInput.toLowerCase() === 'no') {
-                    // Если пользователь отказался (No)
+                } else if (textInput.toLowerCase() === 'n') {
+                    // Если пользователь отказался (n)
                     await ctx.reply('Изменение данных отменено.');
-                    await ctx.editMessageText('Выберите поле, которое хотите редактировать:', actionButtonsAdminTwo);
+                    await ctx.reply(`Данные которые вы ввели: ${textInput}`);
+                    ctx.session.awaitingConfirmation = false;
+                    ctx.session.tempInput = false;
+                    ctx.scene.leave();
+                    await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminTwo);
                 } else {
                     // Если пользователь ввел некорректный ответ
-                    await ctx.reply('Пожалуйста, ответьте "yes" или "no".');
+                    await ctx.reply('Пожалуйста, ответьте "y" или "n".');
                     return;
                 }
 
                 // Сбрасываем флаги после обработки
                 ctx.session.awaitingConfirmation = false;
-                ctx.session.tempInput = undefined;
+                ctx.session.tempInput = false;
 
                 return;
             }
@@ -55,7 +58,7 @@ export class UpdateScene {
 
                 // Запрашиваем подтверждение
                 await ctx.reply(
-                    `Вы хотите сохранить следующие данные для поля "${field}": "${textInput}"?\nОтветьте "yes" для подтверждения или "no" для отмены.`,
+                    `Вы хотите сохранить следующие данные для поля "${field}": "${textInput}"?\nОтветьте "y" для подтверждения или "n" для отмены.`,
                 );
 
                 // Устанавливаем флаг ожидания подтверждения

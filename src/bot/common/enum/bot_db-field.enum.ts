@@ -4,4 +4,6 @@ export enum EnField {
     Experience = 'experience',
     Education = 'education',
     Technologies = 'technologies',
+    Lines = 'projects',
+    Photos = 'photos',
 }

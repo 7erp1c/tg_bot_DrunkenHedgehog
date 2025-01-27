@@ -3,7 +3,7 @@ import { Telegraf } from 'telegraf';
 import { Context } from '../../user/user.controller';
 import { DataBatton, NameBatton } from '../common/enum/bot_actions.enum';
 import { BotScene } from '../common/enum/bot_scene.enum';
-import { EnField } from '../common/enum/bot_db_field.enum';
+import { EnField } from '../common/enum/bot_db-field.enum';
 
 @Update()
 export class BotUpdateProfile {
@@ -78,15 +78,28 @@ export class BotUpdateProfile {
 
     @Action(DataBatton.Lines)
     async updateProjects(@Ctx() ctx: any) {
-        await ctx.reply(
-            'Введите новые ссылки на проекты (через запятую). Пример: /update_projects https://example.com, https://project.com',
-        );
+        ctx.session.editingField = EnField.Lines;
+
+        ctx.session.isAwaitingCodeUpdate = true;
+
+        await ctx.deleteMessage();
+
+        await ctx.reply(`Введите новый текст для поля "${NameBatton.Lines}":`);
+
+        await ctx.scene.enter(BotScene.SaveTextScene);
     }
 
     @Action(DataBatton.Photo)
-    async updatePhoto(@Ctx() ctx: Context) {
+    async updatePhoto(@Ctx() ctx: any) {
+        ctx.session.editingField = EnField.Photos; // Сохраняем информацию о редактируемом поле
+        console.log(ctx.session.editingField);
+        ctx.session.isAwaitingPhotoUpdate = true; // Устанавливаем флаг ожидания фото
+
+        await ctx.deleteMessage();
+
         await ctx.reply(
-            'Загрузите новое фото, отправив его в сообщении. Пример: отправьте фото с подписью /update_photo',
+            'Загрузите новое фото с подписью,где подпись будет key, отправив его в сообщении. Пример: просто отправьте фото, и подпиши.',
         );
+        await ctx.scene.enter(BotScene.SavePhotoScene);
     }
 }

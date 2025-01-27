@@ -5,7 +5,6 @@ import { ConfigurationModule } from './common/configuration.module';
 import configuration, { ConfigurationService } from './common/configuration.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
 import { BotModule } from './bot/bot_module';
 import { session } from 'telegraf';
 import { ResumeModule } from './resume/resume.module';
@@ -35,7 +34,6 @@ const telegrafFactory = {
         TelegrafModule.forRootAsync(telegrafFactory),
         TypeOrmModule.forRootAsync({ useFactory: ConfigurationService.ormconfig }),
         UserModule,
-        AuthModule,
         BotModule,
         ResumeModule,
     ],
