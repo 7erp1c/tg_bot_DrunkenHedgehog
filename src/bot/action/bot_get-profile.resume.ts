@@ -3,7 +3,7 @@ import { DataBatton, NameBatton } from '../common/enum/bot_actions.enum';
 import { BotScene } from '../common/enum/bot_scene.enum';
 import { EnField } from '../common/enum/bot_db-field.enum';
 import { GetResumeService } from '../../resume/service/get-resume.service';
-import { actionButtonsGetThree } from '../button/bot_admin-markup.buttons';
+import { actionButtonsGetLinks, actionButtonsGetResume } from '../button/bot_admin-markup.buttons';
 
 @Update()
 export class BotGetProfile {
@@ -21,7 +21,7 @@ export class BotGetProfile {
 
         // const aboutMe = await this.get.getResumeInfo(EnField.AboutMe);
         await ctx.editMessageText(`${'aboutMe'}`);
-        await ctx.reply('Нажмите кнопку🙂, чтобы получить информацию обо мне:', actionButtonsGetThree);
+        await ctx.reply('Нажмите кнопку🙂, чтобы получить информацию обо мне:', actionButtonsGetResume);
     }
 
     @Action(DataBatton.GetContacts)
@@ -34,7 +34,7 @@ export class BotGetProfile {
 
         const contacts = await this.get.getResumeInfo(EnField.Contacts);
         await ctx.editMessageText(`Мои контакты: ${contacts}`);
-        await ctx.reply('Нажмите кнопку😊, чтобы получить информацию обо мне:', actionButtonsGetThree);
+        await ctx.reply('Нажмите кнопку😊, чтобы получить информацию обо мне:', actionButtonsGetResume);
     }
 
     @Action(DataBatton.GetTechnologies)
@@ -46,8 +46,8 @@ export class BotGetProfile {
         await ctx.deleteMessage();
 
         const technologies = await this.get.getResumeInfo(EnField.Technologies);
-        await ctx.editMessageText(`Технологии: ${technologies}`);
-        await ctx.reply('Нажмите кнопку🤗, чтобы получить информацию обо мне:', actionButtonsGetThree);
+        await ctx.reply(`_Технологии:_\n*_${technologies}_*`, { parse_mode: 'Markdown' });
+        await ctx.reply('Нажмите кнопку🤗, чтобы получить информацию обо мне:', actionButtonsGetResume);
     }
 
     @Action(DataBatton.GetExperience)
@@ -60,7 +60,7 @@ export class BotGetProfile {
 
         const experience = await this.get.getResumeInfo(EnField.AboutMe);
         await ctx.editMessageText(`Опыт: ${experience}`);
-        await ctx.reply('Нажмите кнопку😏, чтобы получить информацию обо мне:', actionButtonsGetThree);
+        await ctx.reply('Нажмите кнопку😏, чтобы получить информацию обо мне:', actionButtonsGetResume);
     }
 
     @Action(DataBatton.GetEducation)
@@ -73,20 +73,18 @@ export class BotGetProfile {
 
         const education = await this.get.getResumeInfo(EnField.Education);
         await ctx.editMessageText(`Образование: ${education}`);
-        await ctx.reply('Нажмите кнопку😉, чтобы получить информацию обо мне:', actionButtonsGetThree);
+        await ctx.reply('Нажмите кнопку😉, чтобы получить информацию обо мне:', actionButtonsGetResume);
     }
 
     @Action(DataBatton.GetLines)
     async updateProjects(@Ctx() ctx: any) {
-        ctx.session.editingField = EnField.Lines;
-
-        ctx.session.isAwaitingCodeGet = true;
+        ctx.session.isAwaitingGetLinks = true;
 
         await ctx.deleteMessage();
 
-        const experience = await this.get.getResumeInfo(EnField.Lines);
-        await ctx.editMessageText(`Ccылки: ${experience}`);
-        await ctx.reply('Нажмите кнопку🦝, чтобы получить информацию обо мне:', actionButtonsGetThree);
+        await ctx.reply('Нажмите кнопку🦝, чтобы получить информацию обо мне:', actionButtonsGetLinks);
+
+        ctx.session.isAwaitingGetLinks = false;
     }
 
     @Action(DataBatton.GetPhoto)
@@ -99,6 +97,6 @@ export class BotGetProfile {
 
         const photos = await this.get.getResumeInfo(EnField.Photos);
         await ctx.editMessageText(`${photos}`);
-        await ctx.reply('Нажмите кнопку😄, чтобы получить информацию обо мне:', actionButtonsGetThree);
+        await ctx.reply('Нажмите кнопку😄, чтобы получить информацию обо мне:', actionButtonsGetResume);
     }
 }

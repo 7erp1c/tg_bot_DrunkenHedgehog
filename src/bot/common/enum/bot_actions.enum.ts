@@ -47,4 +47,7 @@ export enum DataBatton {
     GetExperience = 'get_update_experience',
     GetEducation = 'get_update_education',
     GetPhoto = 'get_update_photo',
+    //get users
+    GetResumeForUsers = 'get_resume_for_users',
+    BackToMainMenuUsers = 'beck_to_resume_users',
 }

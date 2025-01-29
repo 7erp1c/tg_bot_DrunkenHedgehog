@@ -3,7 +3,7 @@ import { BotScene } from '../common/enum/bot_scene.enum';
 import { ResumeService } from '../../resume/service/resume.service';
 import axios from 'axios';
 import { CloudinaryService } from '../../common/cloudinary/cloudinary.service';
-import { actionButtonsAdminTwo } from '../button/bot_admin-markup.buttons';
+import { actionButtonsAdminUpdateResume } from '../button/bot_admin-markup.buttons';
 
 @Scene(BotScene.SavePhotoScene)
 export class SavePhotoScene {
@@ -56,7 +56,7 @@ export class SavePhotoScene {
 
             await ctx.reply(`Фото с ключом "${photoKey}" успешно добавлено!`);
 
-            await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminTwo);
+            await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminUpdateResume);
 
             ctx.scene.leave();
         } catch (error) {

@@ -1,12 +1,11 @@
 import { Action, Ctx, InjectBot, On, Start, Update } from 'nestjs-telegraf';
 import { Telegraf } from 'telegraf';
 import { Context } from 'src/user/user.controller';
-import { actionButtonsAdminOne, actionButtonsResume } from 'src/bot/button/bot_admin-markup.buttons';
+import { actionButtonsAdminMain, actionButtonsUsersMain } from 'src/bot/button/bot_admin-markup.buttons';
 import { ADMIN_USER_ID, CODE_USER_LOGIN } from '../../user/dto/variables';
 import { BotActions } from '../common/enum/bot_actions.enum';
 import { messages } from '../../constants/messages';
 import { RegistrationHandler } from '../handlers/registration_handlers';
-import { login } from 'telegraf/typings/button';
 
 @Update()
 export class BotUsers {
@@ -19,9 +18,11 @@ export class BotUsers {
     async start(@Ctx() ctx: any) {
         const user = ctx.from;
 
+        await ctx.deleteMessage();
+
         if (user.id === +ADMIN_USER_ID!) {
             // Если администратор — сразу показываем кнопки
-            await ctx.sendMessage('Привет, админ!😎', actionButtonsAdminOne);
+            await ctx.sendMessage('Привет, админ!😎', actionButtonsAdminMain);
 
             // this.bot.on('callback_query', async (ctx) => {
             //     console.log('Callback data:', ctx.callbackQuery); // Покажет данные callback'а
@@ -31,7 +32,6 @@ export class BotUsers {
         } else {
             // Для обычных пользователей запрашиваем код
             await ctx.sendMessage(messages.welcome(user.first_name));
-            console.log(ctx.session);
             ctx.session.isAwaitingCode = true; // Устанавливаем состояние ожидания кода
         }
     }
@@ -49,7 +49,7 @@ export class BotUsers {
             if (enteredCode === validCode) {
                 // Если код правильный
                 await this.registrationHandler.handlerRegistration(ctx);
-                await ctx.sendMessage(messages.accessGranted, actionButtonsResume);
+                await ctx.sendMessage(messages.accessGranted, actionButtonsUsersMain);
                 ctx.session.isAwaitingCode = false; // Сбрасываем состояние
             } else {
                 // Если код неверный
@@ -69,6 +69,6 @@ export class BotUsers {
 
         await this.registrationHandler.handlerAllUsers(ctx);
 
-        await ctx.sendMessage('Да к тебе никто не заходит, шо ты клацаешь😁', actionButtonsAdminOne);
+        await ctx.sendMessage('Да к тебе никто не заходит, шо ты клацаешь😁', actionButtonsAdminMain);
     }
 }

@@ -3,10 +3,8 @@ import { Markup } from 'telegraf';
 import { InlineKeyboardButton } from 'telegraf/types';
 import { DataBatton, NameBatton } from '../../common/enum/bot_actions.enum';
 
-export const getMainButtonResumeInfo: InlineKeyboardButton = Markup.button.callback(
-    NameBatton.GetResumeInfo,
-    DataBatton.GetResumeInfo,
-);
+export const getMainButtonResumeInfo = Markup.button.callback(NameBatton.GetResumeInfo, DataBatton.GetResumeInfo);
+
 //GET BUTTONS
 export const getButtonResumeAboutMe = Markup.button.callback(NameBatton.GetAboutMe, DataBatton.GetAboutMe);
 
@@ -24,3 +22,9 @@ export const getButtonResumeExperience = Markup.button.callback(NameBatton.GetEx
 export const getButtonResumeEducation = Markup.button.callback(NameBatton.GetEducation, DataBatton.GetEducation);
 
 export const getButtonResumePhoto = Markup.button.callback(NameBatton.GetPhoto, DataBatton.GetPhoto);
+
+//USERS
+export const getMainButtonResumeInfoUsers = Markup.button.callback(
+    NameBatton.GetResumeInfo,
+    DataBatton.GetResumeForUsers,
+);

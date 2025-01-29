@@ -1,6 +1,6 @@
 import { Ctx, On, Scene } from 'nestjs-telegraf';
 import { BotScene } from '../common/enum/bot_scene.enum';
-import { actionButtonsAdminTwo } from '../button/bot_admin-markup.buttons';
+import { actionButtonsAdminUpdateResume } from '../button/bot_admin-markup.buttons';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { ResumeService } from '../../resume/service/resume.service';
 
@@ -27,7 +27,7 @@ export class UpdateTextScene {
                         );
                     }
                     await ctx.reply('Данные успешно сохранены!');
-                    await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminTwo);
+                    await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminUpdateResume);
                 } else if (textInput.toLowerCase() === 'n') {
                     // Если пользователь отказался (n)
                     await ctx.reply('Изменение данных отменено.');
@@ -35,7 +35,7 @@ export class UpdateTextScene {
                     ctx.session.awaitingConfirmation = false;
                     ctx.session.tempInput = false;
                     ctx.scene.leave();
-                    await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminTwo);
+                    await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminUpdateResume);
                 } else {
                     // Если пользователь ввел некорректный ответ
                     await ctx.reply('Пожалуйста, ответьте "y" или "n".');
