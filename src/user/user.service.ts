@@ -18,8 +18,21 @@ export class UserService {
         return plainToInstance(UserEntity, user);
     }
 
-    async getAll() {
-        return this.userRepository.find();
+    async getUsersOrGetUserById(userId?: number) {
+        if (userId) {
+            return await this.userRepository.findOneOrFail({
+                where: { id: userId },
+                relations: ['feedback'],
+            });
+        }
+        return await this.userRepository.find({
+            relations: ['feedback'],
+            order: {
+                feedback: {
+                    updateDate: 'DESC', // Сортировка от новых к старым
+                },
+            },
+        });
     }
 
     create(createUserDto: CreateUserDto): Promise<UserEntity> {

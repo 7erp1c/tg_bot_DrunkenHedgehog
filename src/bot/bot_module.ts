@@ -16,6 +16,7 @@ import { FeedbackService } from '../feedbeck/service/feedback.service';
 import { FeedbackEntity } from '../feedbeck/entity/feedback.entity';
 import { FeedbackScene } from './scene/bot_feedback.scene';
 import { FeedbackAction } from './action/feedback/bot_feedback.action';
+import { GetUsersScene } from './scene/bot_get-users.scene';
 
 const bot_class = [
     BotUsers,
@@ -28,6 +29,7 @@ const bot_class = [
     FeedbackScene,
     BotGetProfile,
     FeedbackService,
+    GetUsersScene,
 ];
 
 @Module({

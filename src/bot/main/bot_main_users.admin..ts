@@ -11,6 +11,7 @@ import { BotActions } from '../common/enum/bot_actions.enum';
 import { messages } from '../../constants/messages';
 import { RegistrationHandler } from '../handlers/registration_handlers';
 import { FeedbackService } from '../../feedbeck/service/feedback.service';
+import { BotScene } from '../common/enum/bot_scene.enum';
 
 @Update()
 export class BotUsers {
@@ -66,14 +67,14 @@ export class BotUsers {
     }
 
     @Action(BotActions.ALL_USERS)
-    async allUsersCallback(@Ctx() ctx: Context) {
+    async allUsersCallback(@Ctx() ctx: any) {
         await ctx.answerCbQuery();
+        await ctx.editMessageReplyMarkup(undefined); // Убираем кнопки
+        await ctx.scene.enter(BotScene.GetUsersInfoScene);
+        await ctx.sendMessage('Хотите искать пользователя по ID? (y/n)');
 
-        await ctx.editMessageReplyMarkup(undefined); // убираем кнопки
-
-        await this.registrationHandler.handlerAllUsers(ctx);
-
-        await ctx.sendMessage('Да к тебе никто не заходит, шо ты клацаешь😁', actionButtonsAdminMain);
+        // Ожидаем ответа
+        ctx.scene.state.awaitingIdSearch = true;
     }
 
     async getUserMenuWithFeedbackButton(userId: number) {

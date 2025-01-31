@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
 import { Action, Ctx, Update } from 'nestjs-telegraf';
-import { Context, Markup } from 'telegraf';
+import { Context } from 'telegraf';
 import { actionButtonsAdminMain, actionButtonsAdminUpdateResume } from '../button/bot_admin-markup.buttons';
 import { DataBatton } from '../common/enum/bot_actions.enum';
 

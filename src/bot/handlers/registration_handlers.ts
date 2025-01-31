@@ -1,13 +1,11 @@
 import { Ctx, InjectBot } from 'nestjs-telegraf';
 import { Context } from '../../user/user.controller';
 import { ADMIN_USER_ID } from '../../user/dto/variables';
-import { Markup, Telegraf } from 'telegraf';
-import { BotActions } from '../common/enum/bot_actions.enum';
+import { Telegraf } from 'telegraf';
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../../user/user.service';
-import { UserEntity } from '../../user/entities/user.entity';
 import { IUser } from '../../common/types';
-import { login } from 'telegraf/typings/button';
+import { actionButtonsAdminMain } from '../button/bot_admin-markup.buttons';
 
 @Injectable()
 export class RegistrationHandler {
@@ -25,13 +23,7 @@ export class RegistrationHandler {
         return ctx?.message?.from || ctx?.update?.callback_query?.from;
     }
 
-    getUserName(user: Partial<UserEntity>) {
-        if (user?.username && user.username !== 'unknown') return user.username;
-        if (user?.first_name && user.first_name !== 'unknown') return user.first_name;
-        if (user?.last_name && user.last_name !== 'unknown') return user.last_name;
-    }
-
-    async handlerAllUsers(@Ctx() ctx: Context) {
+    async handlerAllUsers(@Ctx() ctx: any) {
         const userData = this._getUserFromContext(ctx);
 
         if (userData?.id !== +ADMIN_USER_ID!) {
@@ -39,16 +31,55 @@ export class RegistrationHandler {
             return;
         }
 
-        const users = await this.userService.getAll();
+        const usersOrUser = await this.userService.getUsersOrGetUserById();
 
-        ctx.sendMessage(
-            users
-                .map(
-                    (user) =>
-                        `${this.getUserName(user)} (дата регистрации ${new Date(user.createdAt).toLocaleString()})`,
-                )
-                .join('\n'),
-        );
+        // Приводим к массиву, если вернулся один пользователь
+        const users = Array.isArray(usersOrUser) ? usersOrUser : [usersOrUser];
+
+        if (!users.length) {
+            await ctx.sendMessage('Пользователи не найдены.');
+            return;
+        }
+
+        const message = users.map((user) => this.formatUserMessage(user)).join('\n\n');
+        await ctx.sendMessage(message, { parse_mode: 'HTML' });
+        await ctx.sendMessage('Привет, админ!😎', actionButtonsAdminMain);
+    }
+
+    async sendUserById(@Ctx() ctx: any, userId: number) {
+        const user = await this.userService.getUsersOrGetUserById(userId);
+
+        if (!user) {
+            await ctx.sendMessage('Пользователь с таким ID не найден.');
+            return;
+        }
+
+        await ctx.sendMessage(this.formatUserMessage(user), { parse_mode: 'HTML' });
+    }
+
+    formatUserMessage(user: any): string {
+        const userName = `<b>${this.escapeHtml(user.first_name)}</b>`;
+        const userId = `ID: <code>${user.id}</code>`;
+        const registrationDate = `<i>${this.escapeHtml(new Date(user.createdAt).toLocaleString())}</i>`;
+        const comment = user.feedback?.comment ? `<b>ОС:</b>\n${this.escapeHtml(user.feedback.comment)}` : '';
+        const updateDate = user.feedback?.updateDate
+            ? `<i>Дата обновления: ${this.escapeHtml(new Date(user.feedback.updateDate).toLocaleString())}</i>`
+            : '';
+
+        return `${userName} ${userId} ${registrationDate}\n${comment}\n${updateDate}`;
+    }
+
+    escapeHtml(text: string): string {
+        return text.replace(/[&<>'"]/g, (match) => {
+            const escapeMap: Record<string, string> = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;',
+            };
+            return escapeMap[match];
+        });
     }
 
     async handlerRegistration(ctx: Context) {
@@ -57,7 +88,7 @@ export class RegistrationHandler {
 
             const isNewUser = await this.checkIsRegister(userData?.id);
             if (isNewUser) {
-                const save = await this.userService.create(userData);
+                await this.userService.create(userData);
             }
         } catch (error) {
             await ctx.sendMessage('Произошла ошибка при регистрации. Попробуйте позже.');

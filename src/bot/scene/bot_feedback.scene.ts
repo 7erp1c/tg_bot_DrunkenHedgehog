@@ -12,6 +12,12 @@ export class FeedbackScene {
     async handleFeedback(@Ctx() ctx: any) {
         const text = ctx.message.text.trim(); // Убираем лишние пробелы
 
+        // Ограничение на 500 символов
+        if (text.length > 500) {
+            await ctx.reply('ОС не может быть длиннее 500 символов. Пожалуйста, сократите текст.');
+            return; // Возвращаемся, не продолжая обработку
+        }
+
         // Проверяем, ожидает ли бот подтверждения
         if (ctx.scene.state.awaitingConfirmation) {
             if (DataHears.confirm.includes(text)) {
