@@ -4,7 +4,7 @@ import { Context } from 'telegraf';
 import {
     actionButtonsGetResume,
     actionButtonsGetResumeUsers,
-    actionButtonsUsersMain,
+    actionButtonsUsersMainNoFB,
 } from '../button/bot_admin-markup.buttons';
 import { LinksEnum } from '../common/enum/bot_actions-links.enum';
 import { adminId } from '../../constants/messages';
@@ -24,18 +24,13 @@ export class GetResumeActions {
     async beckResume(@Ctx() ctx: Context): Promise<void> {
         try {
             const userId = ctx.from?.id;
-            console.log(userId);
-            console.log(adminId);
+
             if (userId != adminId) {
                 await ctx.editMessageText(
-                    'Нажмите кнопку, чтобы получить информацию обо мне🦁:',
+                    'Нажмите кнопку "Резюме", чтобы получить информацию обо мне:',
                     actionButtonsGetResumeUsers,
                 );
-            } else
-                await ctx.editMessageText(
-                    'Нажмите кнопку, чтобы получить информацию обо мне😈:',
-                    actionButtonsGetResume,
-                );
+            } else await ctx.editMessageText('get resume😈:', actionButtonsGetResume);
         } catch (error) {
             console.error('Ошибка в обработчике beck_resume:', error);
         }
@@ -45,7 +40,7 @@ export class GetResumeActions {
     async getResumeUsers(@Ctx() ctx: Context): Promise<void> {
         try {
             await ctx.editMessageText(
-                'Нажмите кнопку, чтобы получить информацию обо мне🙃:',
+                'Нажмите кнопку, чтобы получить информацию обо мне:',
                 actionButtonsGetResumeUsers,
             );
         } catch (error) {
@@ -56,7 +51,13 @@ export class GetResumeActions {
     @Action(DataBatton.BackToMainMenuUsers)
     async beckResumeUsers(@Ctx() ctx: Context): Promise<void> {
         try {
-            await ctx.editMessageText('Нажмите кнопку, чтобы получить информацию обо мне🦁:', actionButtonsUsersMain);
+            await ctx.editMessageText(
+                `
+            Нажмите кнопку "Резюме", чтобы получить информацию обо мне.
+            Вы можете оставить ОС.
+               `,
+                actionButtonsUsersMainNoFB,
+            );
         } catch (error) {
             console.error('Ошибка в обработчике beck_resume:', error);
         }

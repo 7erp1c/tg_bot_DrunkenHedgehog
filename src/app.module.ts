@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { BotModule } from './bot/bot_module';
 import { session } from 'telegraf';
 import { ResumeModule } from './resume/resume.module';
+import { FeedBeckModule } from './feedbeck/feedbeck.module';
 
 const telegrafFactory = {
     async useFactory(): Promise<TelegrafModuleOptions> {
@@ -36,6 +37,7 @@ const telegrafFactory = {
         UserModule,
         BotModule,
         ResumeModule,
+        FeedBeckModule,
     ],
     controllers: [],
     providers: [],

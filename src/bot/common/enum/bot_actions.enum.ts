@@ -14,7 +14,7 @@ export enum NameBatton {
     Technologies = 'Технологии',
     Experience = 'Опыт',
     Education = 'Образование',
-    Photo = 'Мои фото',
+    Photo = 'Фото',
     //get
     GetResumeInfo = 'Резюме😎',
     GetAboutMe = 'Обо мне',
@@ -23,7 +23,7 @@ export enum NameBatton {
     GetTechnologies = 'Технологии',
     GetExperience = 'Опыт',
     GetEducation = 'Образование',
-    GetPhoto = 'Мои фото',
+    GetPhoto = 'Фото',
 }
 
 export enum DataBatton {

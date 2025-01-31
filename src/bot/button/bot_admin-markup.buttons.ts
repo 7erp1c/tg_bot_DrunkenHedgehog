@@ -8,8 +8,10 @@ import {
     getButtonResumeLines,
     getButtonResumePhoto,
     getButtonResumeTechnologies,
+    getMainButtonResumeExistFeedBeck,
     getMainButtonResumeInfo,
     getMainButtonResumeInfoUsers,
+    getMainButtonResumeNoFeedBeck,
 } from './constants/bot_get-constans.button';
 import {
     adminButtonUpdateAboutMe,
@@ -88,10 +90,21 @@ export const actionButtonsGetLinks = Markup.inlineKeyboard(
     },
 );
 
-//MAIN USER
-export const actionButtonsUsersMain: any = Markup.inlineKeyboard([getMainButtonResumeInfoUsers], {
-    columns: 1,
-});
+//MAIN USER NO OS
+export const actionButtonsUsersMainNoFB: any = Markup.inlineKeyboard(
+    [getMainButtonResumeInfoUsers, getMainButtonResumeNoFeedBeck],
+    {
+        columns: 1,
+    },
+);
+
+//MAIN USER EXIST OS
+export const actionButtonsUsersMainExistFB: any = Markup.inlineKeyboard(
+    [getMainButtonResumeInfoUsers, getMainButtonResumeExistFeedBeck],
+    {
+        columns: 1,
+    },
+);
 
 //GET RESUME USER
 export const actionButtonsGetResumeUsers = Markup.inlineKeyboard(

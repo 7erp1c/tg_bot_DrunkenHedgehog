@@ -1,9 +1,13 @@
 import { Action, Ctx, Update } from 'nestjs-telegraf';
-import { DataBatton, NameBatton } from '../common/enum/bot_actions.enum';
-import { BotScene } from '../common/enum/bot_scene.enum';
+import { DataBatton } from '../common/enum/bot_actions.enum';
 import { EnField } from '../common/enum/bot_db-field.enum';
 import { GetResumeService } from '../../resume/service/get-resume.service';
-import { actionButtonsGetLinks, actionButtonsGetResume } from '../button/bot_admin-markup.buttons';
+import {
+    actionButtonsGetLinks,
+    actionButtonsGetResume,
+    actionButtonsGetResumeUsers,
+} from '../button/bot_admin-markup.buttons';
+import { adminId } from '../../constants/messages';
 
 @Update()
 export class BotGetProfile {
@@ -19,9 +23,14 @@ export class BotGetProfile {
 
         await ctx.deleteMessage();
 
-        // const aboutMe = await this.get.getResumeInfo(EnField.AboutMe);
-        await ctx.editMessageText(`${'aboutMe'}`);
-        await ctx.reply('Нажмите кнопку🙂, чтобы получить информацию обо мне:', actionButtonsGetResume);
+        const aboutMe = await this.get.getResumeInfo(EnField.AboutMe);
+        await ctx.reply(`О себе:\n${aboutMe}`, { parse_mode: 'HTML' });
+        const userId = ctx.from?.id;
+
+        if (userId != adminId) {
+            await ctx.reply('Нажмите кнопку, чтобы получить информацию обо мне:', actionButtonsGetResumeUsers);
+        } else await ctx.reply('get resume😈:', actionButtonsGetResume);
+        ctx.session.isAwaitingCodeGet = false;
     }
 
     @Action(DataBatton.GetContacts)
@@ -33,10 +42,15 @@ export class BotGetProfile {
         await ctx.deleteMessage();
 
         const contacts = await this.get.getResumeInfo(EnField.Contacts);
-        await ctx.editMessageText(`Мои контакты: ${contacts}`);
-        await ctx.reply('Нажмите кнопку😊, чтобы получить информацию обо мне:', actionButtonsGetResume);
-    }
+        await ctx.reply(`Контакты:\n${contacts}`, { parse_mode: 'HTML' });
+        const userId = ctx.from?.id;
 
+        if (userId != adminId) {
+            await ctx.reply('Нажмите кнопку, чтобы получить информацию обо мне:', actionButtonsGetResumeUsers);
+        } else await ctx.reply('get resume😈:', actionButtonsGetResume);
+        ctx.session.isAwaitingCodeGet = false;
+    }
+    //ok
     @Action(DataBatton.GetTechnologies)
     async updateTechnologies(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Technologies;
@@ -46,8 +60,16 @@ export class BotGetProfile {
         await ctx.deleteMessage();
 
         const technologies = await this.get.getResumeInfo(EnField.Technologies);
-        await ctx.reply(`_Технологии:_\n*_${technologies}_*`, { parse_mode: 'Markdown' });
-        await ctx.reply('Нажмите кнопку🤗, чтобы получить информацию обо мне:', actionButtonsGetResume);
+        await ctx.reply(
+            `[Технологии](https://it-incubator.io/education/back-end#stack-of-technologies):\n*${technologies}*`,
+            { parse_mode: 'Markdown', disable_web_page_preview: true },
+        );
+        const userId = ctx.from?.id;
+
+        if (userId != adminId) {
+            await ctx.reply('Нажмите кнопку, чтобы получить информацию обо мне:', actionButtonsGetResumeUsers);
+        } else await ctx.reply('get resume😈:', actionButtonsGetResume);
+        ctx.session.isAwaitingCodeGet = false;
     }
 
     @Action(DataBatton.GetExperience)
@@ -58,22 +80,32 @@ export class BotGetProfile {
 
         await ctx.deleteMessage();
 
-        const experience = await this.get.getResumeInfo(EnField.AboutMe);
-        await ctx.editMessageText(`Опыт: ${experience}`);
-        await ctx.reply('Нажмите кнопку😏, чтобы получить информацию обо мне:', actionButtonsGetResume);
+        const experience = await this.get.getResumeInfo(EnField.Experience);
+        await ctx.reply(`Опыт:\n${experience}`, { parse_mode: 'HTML' });
+        const userId = ctx.from?.id;
+
+        if (userId != adminId) {
+            await ctx.reply('Нажмите кнопку, чтобы получить информацию обо мне:', actionButtonsGetResumeUsers);
+        } else await ctx.reply('get resume😈:', actionButtonsGetResume);
+        ctx.session.isAwaitingCodeGet = false;
     }
 
     @Action(DataBatton.GetEducation)
     async updateEducation(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Education;
-
+        console.log(EnField.Education);
         ctx.session.isAwaitingCodeGet = true;
 
         await ctx.deleteMessage();
 
         const education = await this.get.getResumeInfo(EnField.Education);
-        await ctx.editMessageText(`Образование: ${education}`);
-        await ctx.reply('Нажмите кнопку😉, чтобы получить информацию обо мне:', actionButtonsGetResume);
+        await ctx.reply(`Образование:\n${education}`, { parse_mode: 'HTML' });
+        const userId = ctx.from?.id;
+
+        if (userId != adminId) {
+            await ctx.reply('Нажмите кнопку, чтобы получить информацию обо мне:', actionButtonsGetResumeUsers);
+        } else await ctx.reply('get resume😈:', actionButtonsGetResume);
+        ctx.session.isAwaitingCodeGet = false;
     }
 
     @Action(DataBatton.GetLines)
@@ -82,7 +114,7 @@ export class BotGetProfile {
 
         await ctx.deleteMessage();
 
-        await ctx.reply('Нажмите кнопку🦝, чтобы получить информацию обо мне:', actionButtonsGetLinks);
+        await ctx.reply('Нажмите кнопку, чтобы перейти по ссылке:', actionButtonsGetLinks);
 
         ctx.session.isAwaitingGetLinks = false;
     }
@@ -95,8 +127,13 @@ export class BotGetProfile {
 
         await ctx.deleteMessage();
 
-        const photos = await this.get.getResumeInfo(EnField.Photos);
-        await ctx.editMessageText(`${photos}`);
-        await ctx.reply('Нажмите кнопку😄, чтобы получить информацию обо мне:', actionButtonsGetResume);
+        const photoUrl = await this.get.getResumeInfo(EnField.Photos);
+        await ctx.replyWithPhoto(photoUrl);
+        const userId = ctx.from?.id;
+
+        if (userId != adminId) {
+            await ctx.reply('Нажмите кнопку, чтобы получить информацию обо мне:', actionButtonsGetResumeUsers);
+        } else await ctx.reply('get resume😈:', actionButtonsGetResume);
+        ctx.session.isAwaitingCodeGet = false;
     }
 }

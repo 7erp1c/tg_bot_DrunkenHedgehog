@@ -12,6 +12,7 @@ import { SavePhotoScene } from './scene/bot_save-photos.scene';
 import { CloudinaryService } from '../common/cloudinary/cloudinary.service';
 import { GetResumeActions } from './action/bot_get-menu.resume';
 import { BotGetProfile } from './action/bot_get-profile.resume';
+import { FeedBeckModule } from '../feedbeck/feedbeck.module';
 
 const bot_class = [
     BotUsers,
@@ -24,7 +25,7 @@ const bot_class = [
 ];
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UserEntity]), ConfigurationModule, UserModule, ResumeModule],
+    imports: [TypeOrmModule.forFeature([UserEntity]), ConfigurationModule, UserModule, ResumeModule, FeedBeckModule],
     providers: [...bot_class],
     exports: [...bot_class],
 })
