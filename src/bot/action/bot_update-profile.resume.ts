@@ -92,7 +92,7 @@ export class BotUpdateProfile {
     @Action(DataBatton.Photo)
     async updatePhoto(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Photos; // Сохраняем информацию о редактируемом поле
-        console.log(ctx.session.editingField);
+
         ctx.session.isAwaitingPhotoUpdate = true; // Устанавливаем флаг ожидания фото
 
         await ctx.deleteMessage();

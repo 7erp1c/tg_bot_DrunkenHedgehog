@@ -8,42 +8,39 @@ import { TConfiguration } from './types/configruation';
 import * as dotenv from 'dotenv';
 
 // Загружаем переменные окружения из .env файла
-dotenv.config()
+dotenv.config();
 
 const configPath = join(__dirname, '../../config.yaml');
 // const configPath = process.env.CONFIG_FILE_PATH;
 
 @Injectable()
-export class ConfigurationService<
-  T extends TConfiguration = TConfiguration,
-> extends ConfigService<T> {
-  private readonly _config: T;
+export class ConfigurationService<T extends TConfiguration = TConfiguration> extends ConfigService<T> {
+    private readonly _config: T;
 
-  constructor(internalConfig: T) {
-    super(internalConfig);
-    this._config = internalConfig;
-    console.log('create config');
-  }
+    constructor(internalConfig: T) {
+        super(internalConfig);
+        this._config = internalConfig;
+    }
 
-  get config() {
-    return this._config;
-  }
+    get config() {
+        return this._config;
+    }
 
-  static get dataSource(): DataSourceOptions {
-    return ConfigurationService.configuration.postgres;
-  }
+    static get dataSource(): DataSourceOptions {
+        return ConfigurationService.configuration.postgres;
+    }
 
-  static get configuration() {
-    return <TConfiguration>yaml.load(readFileSync(configPath, 'utf8'));
-  }
+    static get configuration() {
+        return <TConfiguration>yaml.load(readFileSync(configPath, 'utf8'));
+    }
 
-  static get ormconfig() {
-    return registerAs('database', () => ({
-      ...ConfigurationService.configuration.postgres,
-      entities: [join(__dirname, './../**', '*.entity.{ts,js}')],
-      migrations: [join(__dirname, './../migration', '**', '*.{ts,js}')],
-    }));
-  }
+    static get ormconfig() {
+        return registerAs('database', () => ({
+            ...ConfigurationService.configuration.postgres,
+            entities: [join(__dirname, './../**', '*.entity.{ts,js}')],
+            migrations: [join(__dirname, './../migration', '**', '*.{ts,js}')],
+        }));
+    }
 }
 
 export default () => ConfigurationService.configuration;

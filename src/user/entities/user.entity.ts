@@ -1,5 +1,7 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryColumn, JoinColumn } from 'typeorm';
+
 import { IUser } from '../../common/types';
+import { FeedbackEntity } from '../../feedbeck/entity/feedback.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity implements IUser {
@@ -15,10 +17,10 @@ export class UserEntity implements IUser {
     @Column({ type: 'text', default: 'unknown' })
     username: string;
 
-    /** createdAt — дата создания, тип значения Date; */
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
-    /** updatedAt — дата изменения, тип значения Date. */
-    // @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-    // updatedAt: Date;
+
+    @OneToOne(() => FeedbackEntity, (feedback) => feedback.user, { cascade: true })
+    @JoinColumn()
+    feedback: FeedbackEntity;
 }

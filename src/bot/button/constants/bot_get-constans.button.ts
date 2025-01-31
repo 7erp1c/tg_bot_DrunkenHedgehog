@@ -28,5 +28,5 @@ export const getMainButtonResumeInfoUsers = Markup.button.callback(
     NameBatton.GetResumeInfo,
     DataBatton.GetResumeForUsers,
 );
-export const getMainButtonResumeNoFeedBeck = Markup.button.callback('Оставить ОС', 'leave_the_os');
-export const getMainButtonResumeExistFeedBeck = Markup.button.callback('Редактировать ОС', 'edit_the_os');
+export const getMainButtonResumeNoFeedBeck = Markup.button.callback('Оставить ОС', 'feedback_os');
+export const getMainButtonResumeExistFeedBeck = Markup.button.callback('Редактировать ОС', 'feedback_os');

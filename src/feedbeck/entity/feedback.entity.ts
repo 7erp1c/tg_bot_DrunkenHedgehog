@@ -1,12 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { UserEntity } from '../../user/entities/user.entity';
 
 @Entity({ name: 'feedback' })
 export class FeedbackEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    userId: number;
+    @OneToOne(() => UserEntity, (user) => user.feedback, { onDelete: 'CASCADE' })
+    user: UserEntity;
 
     @Column({ type: 'text' })
     data: string;

@@ -1,7 +1,6 @@
 import { Ctx, On, Scene } from 'nestjs-telegraf';
 import { BotScene } from '../common/enum/bot_scene.enum';
 import { ResumeService } from '../../resume/service/resume.service';
-import axios from 'axios';
 import { CloudinaryService } from '../../common/cloudinary/cloudinary.service';
 import { actionButtonsAdminUpdateResume } from '../button/bot_admin-markup.buttons';
 
@@ -57,10 +56,8 @@ export class SavePhotoScene {
             await ctx.reply(`Фото с ключом "${photoKey}" успешно добавлено!`);
 
             await ctx.reply('Выберите поле, которое хотите редактировать:', actionButtonsAdminUpdateResume);
-
             ctx.scene.leave();
         } catch (error) {
-            console.error('Ошибка при сохранении фото:', error);
             await ctx.reply('Произошла ошибка при сохранении фото. Попробуйте позже.');
         }
     }

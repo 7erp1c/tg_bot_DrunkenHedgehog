@@ -8,7 +8,7 @@ import { UserModule } from './user/user.module';
 import { BotModule } from './bot/bot_module';
 import { session } from 'telegraf';
 import { ResumeModule } from './resume/resume.module';
-import { FeedBeckModule } from './feedbeck/feedbeck.module';
+import { FeedBackModule } from './feedbeck/feedBackModule';
 
 const telegrafFactory = {
     async useFactory(): Promise<TelegrafModuleOptions> {
@@ -17,7 +17,6 @@ const telegrafFactory = {
             middlewares: [
                 session(),
                 async (ctx, next) => {
-                    console.log('Middleware: update type:', ctx.updateType);
                     await next();
                 },
             ],
@@ -37,7 +36,7 @@ const telegrafFactory = {
         UserModule,
         BotModule,
         ResumeModule,
-        FeedBeckModule,
+        FeedBackModule,
     ],
     controllers: [],
     providers: [],

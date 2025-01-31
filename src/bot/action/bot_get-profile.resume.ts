@@ -93,7 +93,6 @@ export class BotGetProfile {
     @Action(DataBatton.GetEducation)
     async updateEducation(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Education;
-        console.log(EnField.Education);
         ctx.session.isAwaitingCodeGet = true;
 
         await ctx.deleteMessage();

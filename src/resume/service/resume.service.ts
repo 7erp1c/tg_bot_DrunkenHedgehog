@@ -55,7 +55,7 @@ export class ResumeService {
             if (!resume) {
                 throw new Error(`Резюме с ID ${resumeId} не найдено.`);
             }
-            console.log('URL:        *        ', url);
+
             // Добавляем новое фото с ключом в массив
             resume.photos.push({ key, data: url });
 

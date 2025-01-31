@@ -16,7 +16,7 @@ export class GetResumeService {
         if (!result) {
             return null; // Если не нашли, возвращаем null
         }
-        console.log(result);
+
         if (field === 'photos') {
             // Перебираем массив photos и ищем объект с key: 'main'
             const mainPhoto = result.photos.find((p) => p.key === 'main');

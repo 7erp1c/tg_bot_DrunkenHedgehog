@@ -1,5 +1,5 @@
 import { Action, Ctx, InjectBot, On, Start, Update } from 'nestjs-telegraf';
-import { Markup, Telegraf } from 'telegraf';
+import { Telegraf } from 'telegraf';
 import { Context } from 'src/user/user.controller';
 import {
     actionButtonsAdminMain,
@@ -10,14 +10,14 @@ import { ADMIN_USER_ID, CODE_USER_LOGIN } from '../../user/dto/variables';
 import { BotActions } from '../common/enum/bot_actions.enum';
 import { messages } from '../../constants/messages';
 import { RegistrationHandler } from '../handlers/registration_handlers';
-import { FeedBeckService } from '../../feedbeck/service/feedbeck.service';
+import { FeedbackService } from '../../feedbeck/service/feedback.service';
 
 @Update()
 export class BotUsers {
     constructor(
         @InjectBot() private readonly bot: Telegraf<Context>,
         private readonly registrationHandler: RegistrationHandler,
-        private readonly feedbackService: FeedBeckService,
+        private readonly feedbackService: FeedbackService,
     ) {}
 
     @Start()
