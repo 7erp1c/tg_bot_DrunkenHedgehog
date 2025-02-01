@@ -42,13 +42,15 @@ const adminButtonBack = Markup.button.callback(NameButton.BackToMain, DataButton
 
 const userButtonBackGetResume = Markup.button.callback(NameButton.BackToMain, DataButton.BackToMainMenuUsers); //кнопка назад в основное меню users<=get resume
 
+//ADMIN MAIN MENU
 export const actionButtonsAdminMain: any = Markup.inlineKeyboard(
     [adminButtonAllUsers, adminButtonCreateResume, getMainButtonResumeInfo],
     {
         columns: 2,
     },
 );
-//UPDATE RESUME ADMIN
+
+//ADMIN UPDATE RESUME
 export const actionButtonsAdminUpdateResume: any = Markup.inlineKeyboard(
     [
         adminButtonUpdateAboutMe,
@@ -64,7 +66,8 @@ export const actionButtonsAdminUpdateResume: any = Markup.inlineKeyboard(
         columns: 3,
     },
 );
-//GET RESUME ADMIN
+
+//ADMIN GET RESUME
 export const actionButtonsGetResume = Markup.inlineKeyboard(
     [
         getButtonResumeAboutMe,
@@ -80,7 +83,8 @@ export const actionButtonsGetResume = Markup.inlineKeyboard(
         columns: 3,
     },
 );
-//GET LINKS ADMIN
+
+//ADMIN GET LINKS
 export const actionButtonsGetLinks = Markup.inlineKeyboard(
     [linkGitHub, linkTg, linkCodeWars, linkFreeCodeCamp, linkItIncubator, linkUniversity, linkVk, linksButtonBeck],
     {
@@ -88,7 +92,7 @@ export const actionButtonsGetLinks = Markup.inlineKeyboard(
     },
 );
 
-//MAIN USER NO OS
+//MAIN USERS NO OS
 export const actionButtonsUsersMainNoFB: any = Markup.inlineKeyboard(
     [getMainButtonResumeInfoUsers, getMainButtonResumeNoFeedBeck],
     {
@@ -96,7 +100,7 @@ export const actionButtonsUsersMainNoFB: any = Markup.inlineKeyboard(
     },
 );
 
-//MAIN USER EXIST OS
+//MAIN USERS EXIST OS
 export const actionButtonsUsersMainExistFB: any = Markup.inlineKeyboard(
     [getMainButtonResumeInfoUsers, getMainButtonResumeExistFeedBeck],
     {
@@ -104,7 +108,7 @@ export const actionButtonsUsersMainExistFB: any = Markup.inlineKeyboard(
     },
 );
 
-//GET RESUME USER
+//GET RESUME USERS
 export const actionButtonsGetResumeUsers = Markup.inlineKeyboard(
     [
         getButtonResumeAboutMe,
