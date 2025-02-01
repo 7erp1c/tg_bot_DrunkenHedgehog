@@ -1,5 +1,5 @@
 import { Action, Ctx, Update } from 'nestjs-telegraf';
-import { DataBatton } from '../common/enum/bot_actions.enum';
+import { DataButton } from '../common/enum/bot_actions.enum';
 import { EnField } from '../common/enum/bot_db-field.enum';
 import { GetResumeService } from '../../resume/service/get-resume.service';
 import {
@@ -13,7 +13,7 @@ import { adminId } from '../../constants/messages';
 export class BotGetProfile {
     constructor(private readonly get: GetResumeService) {}
 
-    @Action(DataBatton.GetAboutMe)
+    @Action(DataButton.GetAboutMe)
     async UpdateAboutMe(@Ctx() ctx: any) {
         await ctx.answerCbQuery();
 
@@ -33,7 +33,7 @@ export class BotGetProfile {
         ctx.session.isAwaitingCodeGet = false;
     }
 
-    @Action(DataBatton.GetContacts)
+    @Action(DataButton.GetContacts)
     async UpdateContactInfo(ctx: any) {
         ctx.session.editingField = EnField.Contacts;
 
@@ -51,7 +51,7 @@ export class BotGetProfile {
         ctx.session.isAwaitingCodeGet = false;
     }
     //ok
-    @Action(DataBatton.GetTechnologies)
+    @Action(DataButton.GetTechnologies)
     async updateTechnologies(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Technologies;
 
@@ -72,7 +72,7 @@ export class BotGetProfile {
         ctx.session.isAwaitingCodeGet = false;
     }
 
-    @Action(DataBatton.GetExperience)
+    @Action(DataButton.GetExperience)
     async updateExperience(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Experience;
 
@@ -90,7 +90,7 @@ export class BotGetProfile {
         ctx.session.isAwaitingCodeGet = false;
     }
 
-    @Action(DataBatton.GetEducation)
+    @Action(DataButton.GetEducation)
     async updateEducation(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Education;
         ctx.session.isAwaitingCodeGet = true;
@@ -107,7 +107,7 @@ export class BotGetProfile {
         ctx.session.isAwaitingCodeGet = false;
     }
 
-    @Action(DataBatton.GetLines)
+    @Action(DataButton.GetLines)
     async updateProjects(@Ctx() ctx: any) {
         ctx.session.isAwaitingGetLinks = true;
 
@@ -118,7 +118,7 @@ export class BotGetProfile {
         ctx.session.isAwaitingGetLinks = false;
     }
 
-    @Action(DataBatton.GetPhoto)
+    @Action(DataButton.GetPhoto)
     async updatePhoto(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Photos;
 

@@ -1,5 +1,5 @@
 import { Markup } from 'telegraf';
-import { BotActions, DataBatton, NameBatton } from '../common/enum/bot_actions.enum';
+import { BotActions, DataButton, NameButton } from '../common/enum/bot_actions.enum';
 import {
     getButtonResumeAboutMe,
     getButtonResumeContact,
@@ -32,17 +32,15 @@ import {
     linkVk,
     linksButtonBeck,
 } from './constants/bot_links-constants.button';
-import { LinksEnum } from '../common/enum/bot_actions-links.enum';
 
-const buttonResume = Markup.button.callback('Регистрация', BotActions.REGISTER);
 //MAIN MENU
 const adminButtonAllUsers = Markup.button.callback(BotActions.ALL_USERS, BotActions.ALL_USERS);
 
-const adminButtonCreateResume = Markup.button.callback(NameBatton.UpdateResume, DataBatton.UpdateResume);
+const adminButtonCreateResume = Markup.button.callback(NameButton.UpdateResume, DataButton.UpdateResume);
 
-const adminButtonBack = Markup.button.callback(NameBatton.BackToMain, DataBatton.BackToMain); //кнопка назад в основное меню
+const adminButtonBack = Markup.button.callback(NameButton.BackToMain, DataButton.BackToMain); //кнопка назад в основное меню
 
-const userButtonBackGetResume = Markup.button.callback(NameBatton.BackToMain, DataBatton.BackToMainMenuUsers); //кнопка назад в основное меню users<=get resume
+const userButtonBackGetResume = Markup.button.callback(NameButton.BackToMain, DataButton.BackToMainMenuUsers); //кнопка назад в основное меню users<=get resume
 
 export const actionButtonsAdminMain: any = Markup.inlineKeyboard(
     [adminButtonAllUsers, adminButtonCreateResume, getMainButtonResumeInfo],

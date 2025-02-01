@@ -1,7 +1,7 @@
 import { Action, Ctx, InjectBot, Update } from 'nestjs-telegraf';
 import { Telegraf } from 'telegraf';
 import { Context } from '../../user/user.controller';
-import { DataBatton, NameBatton } from '../common/enum/bot_actions.enum';
+import { DataButton, NameButton } from '../common/enum/bot_actions.enum';
 import { BotScene } from '../common/enum/bot_scene.enum';
 import { EnField } from '../common/enum/bot_db-field.enum';
 
@@ -9,7 +9,7 @@ import { EnField } from '../common/enum/bot_db-field.enum';
 export class BotUpdateProfile {
     constructor(@InjectBot() private readonly bot: Telegraf<Context>) {}
 
-    @Action(DataBatton.AboutMe)
+    @Action(DataButton.AboutMe)
     async UpdateAboutMe(@Ctx() ctx: any) {
         await ctx.answerCbQuery();
 
@@ -19,12 +19,12 @@ export class BotUpdateProfile {
 
         await ctx.deleteMessage();
 
-        await ctx.reply(`Введите новый текст для поля "${NameBatton.AboutMe}":`);
+        await ctx.reply(`Введите новый текст для поля "${NameButton.AboutMe}":`);
 
         await ctx.scene.enter(BotScene.SaveTextScene);
     }
 
-    @Action(DataBatton.Contacts)
+    @Action(DataButton.Contacts)
     async UpdateContactInfo(ctx: any) {
         ctx.session.editingField = EnField.Contacts;
 
@@ -32,12 +32,12 @@ export class BotUpdateProfile {
 
         await ctx.deleteMessage();
 
-        await ctx.reply(`Введите новый текст для поля "${NameBatton.Contacts}":`);
+        await ctx.reply(`Введите новый текст для поля "${NameButton.Contacts}":`);
 
         await ctx.scene.enter(BotScene.SaveTextScene);
     }
 
-    @Action(DataBatton.Technologies)
+    @Action(DataButton.Technologies)
     async updateTechnologies(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Technologies;
 
@@ -45,12 +45,12 @@ export class BotUpdateProfile {
 
         await ctx.deleteMessage();
 
-        await ctx.reply(`Введите новый текст для поля "${NameBatton.Technologies}":`);
+        await ctx.reply(`Введите новый текст для поля "${NameButton.Technologies}":`);
 
         await ctx.scene.enter(BotScene.SaveTextScene);
     }
 
-    @Action(DataBatton.Experience)
+    @Action(DataButton.Experience)
     async updateExperience(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Experience;
 
@@ -58,12 +58,12 @@ export class BotUpdateProfile {
 
         await ctx.deleteMessage();
 
-        await ctx.reply(`Введите новый текст для поля "${NameBatton.Experience}":`);
+        await ctx.reply(`Введите новый текст для поля "${NameButton.Experience}":`);
 
         await ctx.scene.enter(BotScene.SaveTextScene);
     }
 
-    @Action(DataBatton.Education)
+    @Action(DataButton.Education)
     async updateEducation(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Education;
 
@@ -71,12 +71,12 @@ export class BotUpdateProfile {
 
         await ctx.deleteMessage();
 
-        await ctx.reply(`Введите новый текст для поля "${NameBatton.Education}":`);
+        await ctx.reply(`Введите новый текст для поля "${NameButton.Education}":`);
 
         await ctx.scene.enter(BotScene.SaveTextScene);
     }
 
-    @Action(DataBatton.Lines)
+    @Action(DataButton.Lines)
     async updateProjects(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Lines;
 
@@ -84,12 +84,12 @@ export class BotUpdateProfile {
 
         await ctx.deleteMessage();
 
-        await ctx.reply(`Введите новый текст для поля "${NameBatton.Lines}":`);
+        await ctx.reply(`Введите новый текст для поля "${NameButton.Lines}":`);
 
         await ctx.scene.enter(BotScene.SaveTextScene);
     }
 
-    @Action(DataBatton.Photo)
+    @Action(DataButton.Photo)
     async updatePhoto(@Ctx() ctx: any) {
         ctx.session.editingField = EnField.Photos; // Сохраняем информацию о редактируемом поле
 

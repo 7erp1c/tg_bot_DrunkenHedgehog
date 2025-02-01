@@ -1,11 +1,11 @@
 import { Action, Ctx, Update } from 'nestjs-telegraf';
 import { Context } from 'telegraf';
 import { actionButtonsAdminMain, actionButtonsAdminUpdateResume } from '../button/bot_admin-markup.buttons';
-import { DataBatton } from '../common/enum/bot_actions.enum';
+import { DataButton } from '../common/enum/bot_actions.enum';
 
 @Update()
 export class ResumeActions {
-    @Action(DataBatton.UpdateResume)
+    @Action(DataButton.UpdateResume)
     async updateResume(@Ctx() ctx: Context): Promise<void> {
         try {
             await ctx.editMessageText('Выберите поле, которое хотите редактировать:', actionButtonsAdminUpdateResume);
@@ -14,7 +14,7 @@ export class ResumeActions {
         }
     }
 
-    @Action(DataBatton.BackToMain)
+    @Action(DataButton.BackToMain)
     async backToMainMenu(@Ctx() ctx: Context): Promise<void> {
         try {
             await ctx.editMessageText('Нус, определился?', actionButtonsAdminMain);
@@ -23,7 +23,7 @@ export class ResumeActions {
         }
     }
 
-    @Action(DataBatton.BackToUpdateResumeMenu)
+    @Action(DataButton.BackToUpdateResumeMenu)
     async backToUpdateResumeMenu(@Ctx() ctx: Context): Promise<void> {
         try {
             await ctx.editMessageText('Выберите поле, которое хотите редактировать:', actionButtonsAdminUpdateResume);

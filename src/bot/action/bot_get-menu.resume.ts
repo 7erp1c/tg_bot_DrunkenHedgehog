@@ -1,17 +1,20 @@
 import { Action, Ctx, Update } from 'nestjs-telegraf';
-import { DataBatton } from '../common/enum/bot_actions.enum';
+import { DataButton } from '../common/enum/bot_actions.enum';
 import { Context } from 'telegraf';
 import {
     actionButtonsGetResume,
     actionButtonsGetResumeUsers,
+    actionButtonsUsersMainExistFB,
     actionButtonsUsersMainNoFB,
 } from '../button/bot_admin-markup.buttons';
 import { LinksEnum } from '../common/enum/bot_actions-links.enum';
-import { adminId } from '../../constants/messages';
+import { adminId, messages } from '../../constants/messages';
+import { FeedbackService } from '../../feedbeck/service/feedback.service';
 
 @Update()
 export class GetResumeActions {
-    @Action(DataBatton.GetResumeInfo)
+    constructor(private feedback: FeedbackService) {}
+    @Action(DataButton.GetResumeInfo)
     async getResume(@Ctx() ctx: Context): Promise<void> {
         try {
             await ctx.editMessageText('Нажмите кнопку, чтобы получить информацию обо мне🙃:', actionButtonsGetResume);
@@ -36,7 +39,7 @@ export class GetResumeActions {
         }
     }
 
-    @Action(DataBatton.GetResumeForUsers)
+    @Action(DataButton.GetResumeForUsers)
     async getResumeUsers(@Ctx() ctx: Context): Promise<void> {
         try {
             await ctx.editMessageText(
@@ -48,16 +51,14 @@ export class GetResumeActions {
         }
     }
 
-    @Action(DataBatton.BackToMainMenuUsers)
+    @Action(DataButton.BackToMainMenuUsers)
     async beckResumeUsers(@Ctx() ctx: Context): Promise<void> {
         try {
-            await ctx.editMessageText(
-                `
-            Нажмите кнопку "Резюме", чтобы получить информацию обо мне.
-            Вы можете оставить ОС.
-               `,
-                actionButtonsUsersMainNoFB,
-            );
+            const userId = ctx.from?.id;
+            const findFeedback = await this.feedback.getUserFeedback(userId!);
+            if (findFeedback) {
+                await ctx.editMessageText(messages.accessGrantedBackExistFeedBack, actionButtonsUsersMainExistFB);
+            } else await ctx.editMessageText(messages.accessGrantedBack, actionButtonsUsersMainNoFB);
         } catch (error) {
             console.error('Ошибка в обработчике beck_resume:', error);
         }

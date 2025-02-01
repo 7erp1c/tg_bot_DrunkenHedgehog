@@ -3,7 +3,7 @@ export enum BotActions {
     ALL_USERS = 'Информация о пользователях',
 }
 
-export enum NameBatton {
+export enum NameButton {
     UpdateResume = 'Редактировать резюме',
     BackToMain = 'Назад',
     BackToUpdateResumeMenu = 'Назад',
@@ -24,9 +24,12 @@ export enum NameBatton {
     GetExperience = 'Опыт',
     GetEducation = 'Образование',
     GetPhoto = 'Фото',
+    //feedback
+    CreateFeedback = 'Оставить ОС',
+    EditFeedback = 'Редактировать ОС',
 }
 
-export enum DataBatton {
+export enum DataButton {
     UpdateResume = 'update_resume',
     BackToMain = 'back_to_main_menu',
     BackToUpdateResumeMenu = 'back_to_update_menu',
@@ -50,4 +53,6 @@ export enum DataBatton {
     //get users
     GetResumeForUsers = 'get_resume_for_users',
     BackToMainMenuUsers = 'beck_to_resume_users',
+    //feedback
+    FeedBack = 'feedback_os',
 }

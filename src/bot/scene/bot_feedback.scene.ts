@@ -12,10 +12,21 @@ export class FeedbackScene {
     async handleFeedback(@Ctx() ctx: any) {
         const text = ctx.message.text.trim(); // Убираем лишние пробелы
 
+        // Добавляем возможность выхода по команде "/exit"
+        if (text.toLowerCase() === '/exit') {
+            if (ctx.session.dontExistFeedbackInDb) {
+                await ctx.reply('Вы вышли из режима отправки отзыва.', actionButtonsUsersMainNoFB);
+            } else await ctx.reply('Вы вышли из режима отправки отзыва.', actionButtonsUsersMainExistFB);
+
+            ctx.scene.state = {}; // Чистим состояние
+            await ctx.scene.leave();
+            return;
+        }
+
         // Ограничение на 500 символов
         if (text.length > 500) {
             await ctx.reply('ОС не может быть длиннее 500 символов. Пожалуйста, сократите текст.');
-            return; // Возвращаемся, не продолжая обработку
+            return;
         }
 
         // Проверяем, ожидает ли бот подтверждения

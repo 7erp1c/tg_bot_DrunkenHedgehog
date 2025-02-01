@@ -1,16 +1,16 @@
 import { Markup } from 'telegraf';
-import { DataBatton, NameBatton } from '../../common/enum/bot_actions.enum';
+import { DataButton, NameButton } from '../../common/enum/bot_actions.enum';
 
-export const adminButtonUpdateAboutMe = Markup.button.callback(NameBatton.AboutMe, DataBatton.AboutMe);
+export const adminButtonUpdateAboutMe = Markup.button.callback(NameButton.AboutMe, DataButton.AboutMe);
 
-export const adminButtonUpdateContact = Markup.button.callback(NameBatton.Contacts, DataBatton.Contacts);
+export const adminButtonUpdateContact = Markup.button.callback(NameButton.Contacts, DataButton.Contacts);
 
-export const adminButtonUpdateLines = Markup.button.callback(NameBatton.Lines, DataBatton.Lines);
+export const adminButtonUpdateLines = Markup.button.callback(NameButton.Lines, DataButton.Lines);
 
-export const adminButtonUpdateTechnologies = Markup.button.callback(NameBatton.Technologies, DataBatton.Technologies);
+export const adminButtonUpdateTechnologies = Markup.button.callback(NameButton.Technologies, DataButton.Technologies);
 
-export const adminButtonUpdateExperience = Markup.button.callback(NameBatton.Experience, DataBatton.Experience);
+export const adminButtonUpdateExperience = Markup.button.callback(NameButton.Experience, DataButton.Experience);
 
-export const adminButtonUpdateEducation = Markup.button.callback(NameBatton.Education, DataBatton.Education);
+export const adminButtonUpdateEducation = Markup.button.callback(NameButton.Education, DataButton.Education);
 
-export const adminButtonUpdatePhoto = Markup.button.callback(NameBatton.Photo, DataBatton.Photo);
+export const adminButtonUpdatePhoto = Markup.button.callback(NameButton.Photo, DataButton.Photo);
